@@ -6,53 +6,52 @@ import java.awt.event.*;
 
 public class ColorButtons {
 
+    private JPanel panel;
+
     public static void main(String[] args) {
 
-        new MyFrame();
+        new ColorButtons().go();
     }
 
-    static class MyFrame extends JFrame{
+    public void go(){
 
-        public MyFrame() throws HeadlessException {
+        JFrame frame = new JFrame();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setBounds(500,200,400,300);
+        frame.setResizable(false);
+        frame.setVisible(true);
 
-            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            setBounds(600,200,500,300);
-            setResizable(false);
-            setVisible(true);
+        panel = new JPanel();
 
-            MyPanel panel = new MyPanel();
-            add(panel);
-        }
+        JButton redButton = new JButton("Red");
+        JButton yellowButton = new JButton("Yellow");
+        JButton greenButton = new JButton("Green");
+
+        redButton.addActionListener(new FontColor(Color.red));
+        yellowButton.addActionListener(new FontColor(Color.yellow));
+        greenButton.addActionListener(new FontColor(Color.green));
+
+        panel.add(redButton);
+        panel.add(yellowButton);
+        panel.add(greenButton);
+
+        frame.add(panel);
+
+
 
     }
-    static class MyPanel extends JPanel implements ActionListener{
 
-        JButton buttonRed = new JButton("Red");
-        JButton buttonYellow = new JButton("Yellow");
-        JButton buttonGreen= new JButton("Green");
+    class FontColor implements ActionListener{
 
+        private Color fontColor;
 
-        public MyPanel() {
-            add(buttonRed);
-            add(buttonYellow);
-            add(buttonGreen);
+        public FontColor(Color c){
 
-            buttonRed.addActionListener(this);
-            buttonYellow.addActionListener(this);
-            buttonGreen.addActionListener(this);
-
-
+            fontColor = c;
         }
-        @Override
-        public void actionPerformed(ActionEvent e) {
+        public void actionPerformed(ActionEvent e){
 
-            Object obj = e.getSource();
-
-            if(obj.equals(buttonRed)) setBackground(Color.red);
-            else if (obj.equals(buttonYellow)) setBackground(Color.yellow);
-            else if (obj.equals(buttonGreen)) setBackground(Color.green);
-
+            panel.setBackground(fontColor);
         }
-
     }
 }
