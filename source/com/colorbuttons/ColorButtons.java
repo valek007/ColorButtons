@@ -6,52 +6,61 @@ import java.awt.event.*;
 
 public class ColorButtons {
 
-    private JPanel panel;
-
     public static void main(String[] args) {
 
-        new ColorButtons().go();
-    }
-
-    public void go(){
-
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setBounds(500,200,400,300);
-        frame.setResizable(false);
+        MyFrame frame = new MyFrame();
         frame.setVisible(true);
 
-        panel = new JPanel();
-
-        JButton redButton = new JButton("Red");
-        JButton yellowButton = new JButton("Yellow");
-        JButton greenButton = new JButton("Green");
-
-        redButton.addActionListener(new FontColor(Color.red));
-        yellowButton.addActionListener(new FontColor(Color.yellow));
-        greenButton.addActionListener(new FontColor(Color.green));
-
-        panel.add(redButton);
-        panel.add(yellowButton);
-        panel.add(greenButton);
-
-        frame.add(panel);
-
-
-
     }
 
-    class FontColor implements ActionListener{
+    static class MyFrame extends JFrame{
 
-        private Color fontColor;
+        MyPanel panel = new MyPanel();
 
-        public FontColor(Color c){
-
-            fontColor = c;
+        public MyFrame() {
+            setBounds(500, 200, 400, 300);
+            setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            setResizable(false);
+            add(panel);
         }
-        public void actionPerformed(ActionEvent e){
+    }
 
-            panel.setBackground(fontColor);
+    static class MyPanel extends JPanel {
+
+        JButton buttonRed = new JButton("Red");
+        JButton buttonYellow = new JButton("Yellow");
+        JButton buttonGreen = new JButton("Green");
+
+        FontColor redColor = new FontColor(Color.red);
+        FontColor yellowColor = new FontColor(Color.yellow);
+        FontColor greenColor = new FontColor(Color.green);
+
+        public MyPanel() {
+
+            buttonRed.addActionListener(redColor);
+            buttonYellow.addActionListener(yellowColor);
+            buttonGreen.addActionListener(greenColor);
+
+            add(buttonRed);
+            add(buttonYellow);
+            add(buttonGreen);
+
+        }
+
+        class FontColor implements ActionListener {
+
+            private Color fontColor;
+
+            public FontColor(Color c) {
+
+                fontColor = c;
+            }
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                setBackground(fontColor);
+            }
         }
     }
 }
